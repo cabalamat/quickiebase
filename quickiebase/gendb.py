@@ -82,18 +82,27 @@ class GenCollection(ABC):
 
     #==========
 
-    def makeNewId(self) -> DocId:
-        """ create a new id for a new unused document in this
+    def makeNewId(self, length:int=4) -> DocId:
+        """ Create a new id for a new unused document in this
         collection.
+
+        The id will be of length (length). If random ids of this length
+        don't produce an unused id, the length is bumped up one.
         """
         ID_CHAR_SET = "0123456789abcdefghijklmnopqrstuvwxyz"
-        ID_LENGTH = 4
-        while 1:
+        tries = 0
+        while True:
             candidateId = "".join(secrets.choice(ID_CHAR_SET)
-                                  for i in range(0,ID_LENGTH))
+                                  for i in range(0,length))
             doc = self.getDoc(candidateId)
             if doc is None:
                 return candidateId
+            tries += 1
+            if tries >= 4:
+                length += 1
+                tries = 0
+        #//while
+
 
 
 #---------------------------------------------------------------------
