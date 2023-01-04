@@ -34,6 +34,8 @@ class GenDb(ABC):
 class GenCollection(ABC):
     """ a generic collection/table """
 
+    name: str  # name of collection
+
     @abstractmethod
     def count(self,
               q: QuerySpec=None) -> int:
@@ -72,7 +74,7 @@ class GenCollection(ABC):
         doesn't exist. """
 
     @abstractmethod
-    def saveDoc(self, jDoc: JsonDoc):
+    def insert_one(self, jDoc: JsonDoc):
         """ save a document.
         If the document has an id, then it over-writes and document with
         the same id in the collection.

@@ -30,17 +30,17 @@ class T_creation(lintest.TestCase):
     def test_saveDoc(self):
         """ the saveDoc() function """
         j1 = {'_id':"001", "name": "foo", "species": "dog"}
-        self.col.saveDoc(j1)
+        self.col.insert_one(j1)
         r = self.col.count()
         self.assertSame(r, 1, "1 document in mycol")
 
         j2 = {'_id':"002", "name": "flopsy", "species": "rabbit"}
-        self.col.saveDoc(j2)
+        self.col.insert_one(j2)
         r = self.col.count()
         self.assertSame(r, 2, "2 documents in mycol")
 
         j3 = {'_id':"003", "name": "felix", "species": "cat"}
-        self.col.saveDoc(j3)
+        self.col.insert_one(j3)
         r = self.col.count()
         self.assertSame(r, 3, "3 documents in mycol")
         prn("self.col=%s", self.col)

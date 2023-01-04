@@ -173,7 +173,7 @@ class RamCollection(GenCollection):
             return None
 
 
-    def saveDoc(self, jDoc: JsonDoc):
+    def insert_one(self, jDoc: JsonDoc):
         """ save a document, where the document has an id.
         It might be a new document or over-write an existing one """
         if "_id" in jDoc and isinstance(jDoc['_id'], DocId):
