@@ -8,6 +8,8 @@ from a find().
 
 from typing import List, Union, Dict, Optional, Any, Tuple
 
+from .quickietypes import DocId, JsonDoc
+
 #---------------------------------------------------------------------
 
 
@@ -41,6 +43,13 @@ def normaliseSort(sortArg: SortSpec) -> NormalisedSortSpec:
 
 #---------------------------------------------------------------------
 
+def sortDocs(docDict: Dict[DocId, JsonDoc],
+               sort: SortSpec
+    ) -> List[Tuple[DocId,JsonDoc]]:
+    """
+    Given a dict of documents, sort them according to the sort criteria
+    in (sort).
+    """
 
 #---------------------------------------------------------------------
 

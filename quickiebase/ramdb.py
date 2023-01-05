@@ -9,6 +9,7 @@ from .butil import form
 
 from .quickietypes import DocId, JsonDoc
 
+from . import sorting
 from .sorting import SortSpec
 
 from . import queries
@@ -67,17 +68,6 @@ def base36encode(n: int) -> str:
 # utility functions
 
 
-def kvSortDocs(docDict: Dict[DocId, JsonDoc],
-               sort: SortSpec
-    ) -> List[Tuple[DocId,JsonDoc]]:
-    """
-    Given a dict of documents, sort them accoring to the sort criteria
-    in (sort).
-
-    NB: for now, just returns documents in the order of the dictionary
-    key.
-    """
-
 def addId(doc: JsonDoc, id: DocId) -> JsonDoc:
     """ add an _id to a document """
     doc2 = doc.copy()
@@ -135,7 +125,7 @@ class RamCollection(GenCollection):
         queries.assertValidQuery(q)
         skipped = 0
         emitted = 0
-        for id, j in kvSortDocs(self.documents, sort):
+        for id, j in sorting.sortDocs(self.documents, sort):
             if not queries.matchesQuery(j, q):
                 continue
             if skipped<skip:
