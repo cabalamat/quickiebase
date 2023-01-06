@@ -232,7 +232,21 @@ def exValue(f, orValue):
         r = orValue
     return r
 
-def sortedkv(d: dict) -> List[Tuple[Any,Any]]:
+def kv(c: Union[Dict,List]) -> Iterator[Tuple[Any,Any]]:
+    """ return a list of key-value pairs. Works for lists
+    and dicts. Useful for for loops.
+
+    e.g. ['aa','bb','c'] -> [(0,'aa'), (1,'bb'), (2,'c')]
+    {'a':4, 'b':'zz'} -> [('a',4), ('b','zz')]
+    """
+    if isinstance(c, list):
+        return enumerate(c)
+    else:
+        # it's a dict
+        return c.items()
+
+
+def sortedKv(d: dict) -> List[Tuple[Any,Any]]:
     """ return key-value pairs for a dictionary, sorted
     by key.
     """

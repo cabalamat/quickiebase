@@ -18,7 +18,7 @@ class T_normaliseSort(lintest.TestCase):
         self.assertSame(r, sb, form("%r -> %r", f, sb))
 
     def test_None(self):
-        self.nsTest(None, None)
+        self.nsTest(None, [])
 
 
     def test_str(self):
