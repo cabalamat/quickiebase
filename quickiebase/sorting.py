@@ -10,7 +10,7 @@ from typing import List, Union, Dict, Optional, Any, Tuple
 import functools
 
 from .butil import *
-from .quickietypes import DocId, JsonDoc
+from .quickietypes import DocId, JsonDoc, IdDictJsonDoc, IdJsonDoc
 
 #---------------------------------------------------------------------
 
@@ -61,9 +61,9 @@ def getTypeInt(x) -> int:
     return 7
 
 
-def sortDocs(docDict: Dict[DocId, JsonDoc],
-               sort: SortSpec
-    ) -> List[Tuple[DocId,JsonDoc]]:
+def sortDocs(docDict: IdDictJsonDoc,
+             sort: SortSpec
+    ) -> List[IdJsonDoc]:
     """
     Given a dict of documents, sort them according to the sort criteria
     in (sort).
@@ -91,19 +91,21 @@ def sortDocs(docDict: Dict[DocId, JsonDoc],
             ft2 = getTypeInt(fv2)
 
             # different types?
-            if ft1<ft2: return -1
-            if ft1>ft2: return 1
+            if ft1<ft2: return -d
+            if ft1>ft2: return d
 
             #>>>> must be same type
-            if ft1 in (4,5,7):
+            if ft1==1:
+                pass # None is always equal to None
+            elif ft1 in (4,5,7):
                 # compare reprs
                 rv1 = repr(fv1)
                 rv2 = repr(fv2)
-                if rv1<rv2: return -1
-                if rv1>rv2: return 1
+                if rv1<rv2: return -d
+                if rv1>rv2: return d
             else:
-                if fv1<fv2: return -1
-                if fv1>fv2: return 1
+                if fv1<fv2: return -d
+                if fv1>fv2: return d
         #//for
         return 0
 

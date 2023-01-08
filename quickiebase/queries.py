@@ -46,7 +46,7 @@ def matchesDict(jDoc: JsonDoc, q: DictQuerySpec) -> bool:
     """ a search where the query is a dict
     (and not $-forms)
     """
-    for field, searchValue in butil.sortedkv(q):
+    for field, searchValue in butil.sortedKv(q):
         if field in jDoc:
             mf = matchesField(jDoc, field, searchValue)
             if not mf: return False
@@ -74,7 +74,7 @@ def matchesField(jDoc: JsonDoc, field: str, searchValue) -> bool:
         return jDoc[field] == searchValue
 
     return all(matchesOp(jDoc, field, op, value)
-               for op, value in butil.sortedkv(searchValue))
+               for op, value in butil.sortedKv(searchValue))
 
 def matchesOp(jDoc: JsonDoc, field: str, op: str, value) -> bool:
     """ This is a search of the form:

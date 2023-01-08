@@ -11,4 +11,13 @@ DocId = str
 JsonDoc = Dict[str, 'JsonValue']
 JsonValue = Union[JsonDoc, List['JsonValue'], str, int, float, bool, None]
 
+""" a JsonDoc with the _id field separate """
+IdJsonDoc = Tuple[DocId, JsonDoc]
+
+""" A dictionary whose keys are DocIds and values are JsonDocs.
+This is how RamCollection stores a table unternally.
+"""
+IdDictJsonDoc = Dict[DocId, JsonDoc]
+
+
 #end
