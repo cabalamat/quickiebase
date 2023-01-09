@@ -18,6 +18,16 @@ from .ramdb import RamDb, RamCollection
 
 #---------------------------------------------------------------------
 
+def validName(s: str) -> bool:
+    """ Is (s) a valid database or collection name? """
+    firstChar = "_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    restChars = firstChar + "0123456789"
+    if len(s)<1: return False
+    if s[0] not in firstChar: return False
+    return all(c in restChars for c in s[1:])
+
+#---------------------------------------------------------------------
+
 DEFAULT_BASE_DIR = "~/.local/share/dbmdb/"
 
 class DbmDb(RamDb):

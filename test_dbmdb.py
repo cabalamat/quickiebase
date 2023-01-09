@@ -16,8 +16,25 @@ from quickiebase.dbmdb import DbmDb, DbmCollection
 
 class T_DbmDb(lintest.TestCase):
 
+    def test_validName(self):
+        """ validName() """
+        r = dbmdb.validName("")
+        self.assertFalse(r, ' "" is invalid')
+
+        r = dbmdb.validName("_")
+        self.assertTrue(r, ' _ is valid')
+
+        r = dbmdb.validName("xyz")
+        self.assertTrue(r, ' xyz is valid')
+
+        r = dbmdb.validName("0xyz")
+        self.assertFalse(r, ' 0xyz is invalid')
+
+        r = dbmdb.validName("the bad name")
+        self.assertFalse(r, ' "the bad name"" is invalid')
+
     def test_fileCreation(self):
-        """ does it create directory for a database """
+        """ does it create a directory for a database? """
         db = DbmDb("mybase")
         self.assertDirExists("~/.local/share/dbmdb/mybase")
 
