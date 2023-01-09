@@ -70,6 +70,27 @@ def getFilenames(dir: str, pattern:str="*") -> List[str]:
     matching.sort()
     return matching
 
+def dirExists(pn: str) -> bool:
+    """ Does a directory exist?
+    @param pn  = a pathname
+    @return = True if (fn) is the filename of an existing file
+        and it is readable.
+    """
+    pn2 = os.path.expanduser(pn)
+    readable = os.access(pn, os.R_OK)
+    # (if it doesn't exist, it can't be readable, so don't bother
+    # testing that separately)
+    if not readable: return False
+
+    # now test if it's a directory
+    mode = os.stat(pn2)[stat.ST_MODE]
+    return stat.S_ISDIR(mode)
+
+def createDir(pn: str):
+    """ if a directory doesn't already exist, create it """
+    if dirExists(pn): return
+    os.makedirs(pn)
+
 #---------------------------------------------------------------------
 # formatting functions
 
