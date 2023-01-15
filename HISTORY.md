@@ -19,7 +19,7 @@ It will continue to be `False` until a method such as `find()` is performed,
 at which point the whole collection is read into RAM (once) to do the
 `find()` and any subsequent finds.
 
-
+## 2023-Jan-15: more on dbmdb.DbmDb
 
 
 

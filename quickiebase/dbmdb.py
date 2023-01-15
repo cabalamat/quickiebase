@@ -42,6 +42,11 @@ class DbmDb(RamDb):
         self.dbDir = butil.join(DEFAULT_BASE_DIR, dbName)
         butil.createDir(self.dbDir)
 
+    def getCollection(self, colName: str) -> 'DbmCollection':
+        """ return a collection in this database, creating it if
+        necessary
+        """
+
 #---------------------------------------------------------------------
 
 class DbmCollection(RamCollection):
