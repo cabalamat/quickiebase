@@ -7,6 +7,8 @@ DbmDb and DbmCollection implement a database over dbm.
 """
 
 from typing import List, Tuple, Union, Dict, Optional, Any, Iterator
+import dbm
+import json
 
 from . import butil
 from .butil import form
@@ -14,7 +16,7 @@ from .butil import form
 from .quickietypes import DocId, JsonDoc
 
 from .gendb import GenDb, GenCollection
-from .ramdb import RamDb, RamCollection
+from .ramdb import RamDb, RamCollection, removeId
 
 #---------------------------------------------------------------------
 
@@ -42,16 +44,69 @@ class DbmDb(RamDb):
         self.dbDir = butil.join(DEFAULT_BASE_DIR, dbName)
         butil.createDir(self.dbDir)
 
-    def getCollection(self, colName: str) -> 'DbmCollection':
-        """ return a collection in this database, creating it if
-        necessary
-        """
+    def makeCollection(self, colName: str):
+        """ create a new collection in this database """
+        newCol = DbmCollection(self, colName)
+        self.collections[colName] = newCol
+
 
 #---------------------------------------------------------------------
 
-class DbmCollection(RamCollection):
-    pass
+def toJsonCompact(jd:JsonDoc) -> str:
+    jStr = json.dumps(jd, separators=(',', ':'))
+    return jStr
 
+
+def s2b(id: DocId) -> bytes:
+    """ convert a document id (a str) into bytes, for dbm """
+    b = bytes(id, "utf-8")
+    return b
+
+
+def j2b(jd: JsonDoc) -> bytes:
+    """ convert a document (a JsonDoc) into bytes, for dbm """
+    jStr = toJsonCompact(jd)
+    b = bytes(jStr, "utf-8")
+    return b
+
+
+class DbmCollection(RamCollection):
+
+    db: DbmDb
+    name: str = ""
+    pan: str # full pathname to my file
+    documents: Dict[DocId, JsonDoc] = {}
+    inRam: bool = False # documents currently in RAM
+
+    def __init__(self, db: DbmDb, name: str):
+        self.db = db
+        self.name = name
+        self.documents = {}
+        self.inRam = False
+        self.pan = butil.join(db.dbDir, name)
+        self.ud = dbm.open(self.pan, 'c')
+
+    def delete_one(self, id: DocId):
+        """ delete a document based on its id """
+        keyU = s2u(id)
+        if keyU in self.ud:
+            del self.ud[keyU]
+        if self.inRam:
+            self.documents.pop(id, None)
+
+    def insert_one(self, jDoc: JsonDoc):
+        """ save a document, where the document has an id.
+        It might be a new document or over-write an existing one
+        """
+        if "_id" in jDoc and isinstance(jDoc['_id'], DocId):
+            id = jDoc["_id"]
+        else:
+            id = self.makeNewId()
+        j2 = removeId(jDoc)
+        keyU = s2u(id)
+        self.ud[s2u(id)] = j2u(j2)
+        if self.inRam:
+           self.documents[id] = j2
 
 #---------------------------------------------------------------------
 
