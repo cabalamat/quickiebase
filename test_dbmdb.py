@@ -5,6 +5,8 @@
 DbmDb and DbmCollection implement a database over dbm.
 """
 
+import dbm
+
 from quickiebase.butil import *
 from quickiebase import lintest
 
@@ -37,6 +39,23 @@ class T_DbmDb(lintest.TestCase):
         """ does it create a directory for a database? """
         db = DbmDb("mybase")
         self.assertDirExists("~/.local/share/dbmdb/mybase")
+
+    def test_colCreation(self):
+        db = DbmDb("mybase")
+        col = db.getCollection("mycol")
+
+        col.insert_one({'_id':"001", 'v':55, 'n':"cat"})
+        col.insert_one({'_id':"002", 'v':41, 'n':"dog"})
+
+        raw = col.ud
+        for k in raw.keys():
+            prn("key %r:", k)
+            value = raw[k]
+            prn("    %r", value)
+        #//for k
+
+
+
 
 #---------------------------------------------------------------------
 

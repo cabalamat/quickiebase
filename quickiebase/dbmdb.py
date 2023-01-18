@@ -88,7 +88,7 @@ class DbmCollection(RamCollection):
 
     def delete_one(self, id: DocId):
         """ delete a document based on its id """
-        keyU = s2u(id)
+        keyU = s2b(id)
         if keyU in self.ud:
             del self.ud[keyU]
         if self.inRam:
@@ -103,8 +103,8 @@ class DbmCollection(RamCollection):
         else:
             id = self.makeNewId()
         j2 = removeId(jDoc)
-        keyU = s2u(id)
-        self.ud[s2u(id)] = j2u(j2)
+        keyU = s2b(id)
+        self.ud[s2b(id)] = j2b(j2)
         if self.inRam:
            self.documents[id] = j2
 
