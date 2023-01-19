@@ -53,7 +53,7 @@ class DbmDb(RamDb):
 #---------------------------------------------------------------------
 
 def toJsonCompact(jd:JsonDoc) -> str:
-    jStr = json.dumps(jd, separators=(',', ':'))
+    jStr = json.dumps(jd, separators=(',', ':'), sort_keys=True)
     return jStr
 
 
@@ -107,6 +107,16 @@ class DbmCollection(RamCollection):
         self.ud[s2b(id)] = j2b(j2)
         if self.inRam:
            self.documents[id] = j2
+
+    def saveToFile(self, pan: str):
+        """ save to the file (pan), where pan is the full pathname """
+        self._ensureInRam()
+        super().saveToFile(pan)
+
+    def saveToFilePretty(self, pan: str):
+        """ save to the file (pan), where pan is the full pathname """
+        self._ensureInRam()
+        super().saveToFilePretty(pan)
 
 #---------------------------------------------------------------------
 

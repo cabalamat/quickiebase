@@ -82,6 +82,10 @@ class GenCollection(ABC):
         If the document doesn't have an id, it is given a unique one.
         """
 
+    @abstractmethod
+    def saveToFile(self, pan: str):
+        """ save to the file (pan), where pan is the full pathname """
+
     #==========
 
     def makeNewId(self, length:int=4) -> DocId:

@@ -92,6 +92,34 @@ def createDir(pn: str):
     os.makedirs(pn)
 
 #---------------------------------------------------------------------
+# read and write files:
+
+def readFile(filename: str) -> str:
+    """ read a file, containing unicode characters coded as UTF-8. """
+    pn = normalizePath(filename)
+    f = open(pn, 'r', encoding="utf-8")
+    s = f.read()
+    f.close()
+    return s
+
+
+def writeFile(filename: str, data: str):
+    """ write (data) into a file, over-writing what was in there before.
+    Create direcvtories if necessary. Encode thge text in (data) as utf-8.
+    """
+    pn = normalizePath(filename)
+
+    # create directories if they don't exist
+    dirName = os.path.dirname(pn)
+    if dirName:
+        if not entityExists(dirName):
+            os.makedirs(dirName)
+
+    f = open(pn, 'w', encoding="utf-8")
+    f.write(newValue)
+    f.close()
+
+#---------------------------------------------------------------------
 # formatting functions
 
 def form(fs:str, *args, **kwargs) -> str:

@@ -172,6 +172,19 @@ class RamCollection(GenCollection):
             id = self.makeNewId()
         self.documents[id] = removeId(jDoc)
 
+    def saveToFile(self, pan: str):
+        """ save to the file (pan), where pan is the full pathname """
+        s:str = json.dumps(documents, separators=(',', ':'), sort_keys=True)
+        butil.writeFile(pan, s)
+
+    def saveToFilePretty(self, pan: str):
+        """ save to the file (pan), where pan is the full pathname """
+        s:str = json.dumps(documents,
+                           separators=(', ', ': '),
+                           sort_keys=True,
+                           indent=2)
+        butil.writeFile(pan, s)
+
     def makeNewId(self) -> DocId:
         """ make a new id for the new document """
         return self.name + "-" + self.db.makeIdStub()
