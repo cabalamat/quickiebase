@@ -112,11 +112,11 @@ def writeFile(filename: str, data: str):
     # create directories if they don't exist
     dirName = os.path.dirname(pn)
     if dirName:
-        if not entityExists(dirName):
+        if not dirExists(dirName):
             os.makedirs(dirName)
 
     f = open(pn, 'w', encoding="utf-8")
-    f.write(newValue)
+    f.write(data)
     f.close()
 
 #---------------------------------------------------------------------

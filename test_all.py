@@ -16,6 +16,9 @@ group.add(test_sorting.group)
 import test_ramdb
 group.add(test_ramdb.group)
 
+import test_dbmdb
+group.add(test_dbmdb.group)
+
 
 if __name__=='__main__': group.run()
 

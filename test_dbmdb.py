@@ -42,10 +42,20 @@ class T_DbmDb(lintest.TestCase):
 
     def test_colCreation(self):
         db = DbmDb("mybase")
+        self.assertSame(db.__class__, DbmDb,
+             "(db) is a DbmDb")
         col = db.getCollection("mycol")
+        self.assertSame(col.__class__, DbmCollection,
+             "(col) is a DbmCollection")
 
         col.insert_one({'_id':"001", 'v':55, 'n':"cat"})
         col.insert_one({'_id':"002", 'v':41, 'n':"dog"})
+
+        col.saveToFile("mybase.json")
+        self.assertFileExists("mybase.json")
+
+        col.saveToFilePretty("mybasep.json")
+        self.assertFileExists("mybasep.json")
 
         raw = col.ud
         for k in raw.keys():

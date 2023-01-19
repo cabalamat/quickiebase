@@ -5,7 +5,7 @@ from typing import List, Tuple, Union, Dict, Optional, Any, Iterator
 import json
 
 from . import butil
-from .butil import form
+from .butil import form, dpr
 
 from .quickietypes import DocId, JsonDoc
 
@@ -29,6 +29,7 @@ class RamDb(GenDb):
         """ return a collection in this database, creating it if
         necessary
         """
+        dpr("self.collections=%r", self.collections)
         if not colName in self.collections:
             self.makeCollection(colName)
         return self.collections[colName]
@@ -174,12 +175,12 @@ class RamCollection(GenCollection):
 
     def saveToFile(self, pan: str):
         """ save to the file (pan), where pan is the full pathname """
-        s:str = json.dumps(documents, separators=(',', ':'), sort_keys=True)
+        s:str = json.dumps(self.documents, separators=(',', ':'), sort_keys=True)
         butil.writeFile(pan, s)
 
     def saveToFilePretty(self, pan: str):
         """ save to the file (pan), where pan is the full pathname """
-        s:str = json.dumps(documents,
+        s:str = json.dumps(self.documents,
                            separators=(', ', ': '),
                            sort_keys=True,
                            indent=2)

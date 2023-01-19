@@ -35,6 +35,9 @@ DEFAULT_BASE_DIR = "~/.local/share/dbmdb/"
 class DbmDb(RamDb):
     """ a local database, in RAM """
 
+    collections: dict[str,'DbmCollection'] = {}
+    ix: int = 1 # index for document _id
+
     dbName: str = ""
     dbDir: str = ""
 
@@ -43,6 +46,8 @@ class DbmDb(RamDb):
         self.dbName = dbName
         self.dbDir = butil.join(DEFAULT_BASE_DIR, dbName)
         butil.createDir(self.dbDir)
+        collections = {}
+        ix = 1
 
     def makeCollection(self, colName: str):
         """ create a new collection in this database """
@@ -56,18 +61,30 @@ def toJsonCompact(jd:JsonDoc) -> str:
     jStr = json.dumps(jd, separators=(',', ':'), sort_keys=True)
     return jStr
 
-
 def s2b(id: DocId) -> bytes:
     """ convert a document id (a str) into bytes, for dbm """
     b = bytes(id, "utf-8")
     return b
-
 
 def j2b(jd: JsonDoc) -> bytes:
     """ convert a document (a JsonDoc) into bytes, for dbm """
     jStr = toJsonCompact(jd)
     b = bytes(jStr, "utf-8")
     return b
+
+def b2s(idb: bytes) -> DocId:
+    """ convert a dbm key to an internal key """
+    id = idb.decode(encoding="utf-8")
+    return id
+
+def b2j(jdb: bytes) -> JsonDoc:
+    """ convert a document fromn dbm into internal python representation """
+    jStr = jdb.decode(encoding="utf-8")
+    jd = json.loads(jStr)
+    return jd
+
+
+#---------------------------------------------------------------------
 
 
 class DbmCollection(RamCollection):
@@ -76,7 +93,7 @@ class DbmCollection(RamCollection):
     name: str = ""
     pan: str # full pathname to my file
     documents: Dict[DocId, JsonDoc] = {}
-    inRam: bool = False # documents currently in RAM
+    inRam: bool = False # documents currently in RAM?
 
     def __init__(self, db: DbmDb, name: str):
         self.db = db
@@ -117,6 +134,17 @@ class DbmCollection(RamCollection):
         """ save to the file (pan), where pan is the full pathname """
         self._ensureInRam()
         super().saveToFilePretty(pan)
+
+    def _ensureInRam(self):
+        """ make sure all this collection's documents are stored in RAM """
+        if self.inRam: return
+
+        self.documents = {}
+        for k in self.ud.keys():
+            k2:DocId = b2s(k)
+            jd = b2j(self.ud[k])
+            self.documents[k2] = jd
+        #//for k
 
 #---------------------------------------------------------------------
 
