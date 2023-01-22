@@ -23,8 +23,7 @@ at which point the whole collection is read into RAM (once) to do the
 
 ## 2023-Jan-19:
 
-Passed 69 assertions in 22 test functions
-
-`wc *.py */*.py`: 2190 lines
+* Passed 69 assertions in 22 test functions
+* `wc *.py */*.py`: 2190 lines
 
 /end/

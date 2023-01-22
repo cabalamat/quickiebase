@@ -5,6 +5,10 @@
 DbmDb and DbmCollection implement a database over dbm.
 """
 
+import shutil
+
+from quickiebase import butil
+
 import dbm
 
 from quickiebase.butil import *
@@ -16,7 +20,7 @@ from quickiebase.dbmdb import DbmDb, DbmCollection
 
 #---------------------------------------------------------------------
 
-class T_DbmDb(lintest.TestCase):
+class T_validName(lintest.TestCase):
 
     def test_validName(self):
         """ validName() """
@@ -35,6 +39,23 @@ class T_DbmDb(lintest.TestCase):
         r = dbmdb.validName("the bad name")
         self.assertFalse(r, ' "the bad name"" is invalid')
 
+#---------------------------------------------------------------------
+
+class T_DbmDb(lintest.TestCase):
+    """ test the creation of dbm's files and directories """
+
+    def setUpAll(self):
+        dbDir = butil.join("~/.local/share/dbmdb/mybase")
+        shutil.rmtree(dbDir, ignore_errors=True)
+        self.assertDirDoesNotExist(dbDir)
+
+        butil.deleteFile("mybase.json")
+        self.assertFileDoesNotExist("mybase.json")
+
+        butil.deleteFile("mybasep.json")
+        self.assertFileDoesNotExist("mybasep.json")
+
+
     def test_fileCreation(self):
         """ does it create a directory for a database? """
         db = DbmDb("mybase")
@@ -50,13 +71,7 @@ class T_DbmDb(lintest.TestCase):
 
         col.insert_one({'_id':"001", 'v':55, 'n':"cat"})
         col.insert_one({'_id':"002", 'v':41, 'n':"dog"})
-
-        col.saveToFile("mybase.json")
-        self.assertFileExists("mybase.json")
-
-        col.saveToFilePretty("mybasep.json")
-        self.assertFileExists("mybasep.json")
-
+        prn("=== Contents of dbm database: ===")
         raw = col.ud
         for k in raw.keys():
             prn("key %r:", k)
@@ -64,12 +79,20 @@ class T_DbmDb(lintest.TestCase):
             prn("    %r", value)
         #//for k
 
+        col.saveToFile("mybase.json")
+        self.assertFileExists("mybase.json")
+
+        col.saveToFilePretty("mybasep.json")
+        self.assertFileExists("mybasep.json")
+
+
 
 
 
 #---------------------------------------------------------------------
 
 group = lintest.TestGroup()
+group.add(T_validName)
 group.add(T_DbmDb)
 
 if __name__=='__main__': group.run()

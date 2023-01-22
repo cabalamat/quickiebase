@@ -91,6 +91,11 @@ def createDir(pn: str):
     if dirExists(pn): return
     os.makedirs(pn)
 
+def deleteFile(pan: str):
+    pan = normalizePath(pan)
+    if fileExists(pan):
+        os.remove(pan)
+
 #---------------------------------------------------------------------
 # read and write files:
 

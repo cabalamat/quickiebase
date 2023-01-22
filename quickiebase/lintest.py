@@ -169,6 +169,19 @@ class FileAssertionMixin(ColoursMixin):
             msg = "FAILED: %s; directory <%s> doesn't exist" % (comment, pan)
             raise AssertionError(msg)
 
+    def assertDirDoesNotExist(self, pan, comment=""):
+        """ does directory (pan) exist? it shouldn't.
+        @param pan [string] = a full pathname to a file
+        """
+        ok = not dirExists(pan)
+        if ok:
+            self.passedTest("%s; directory <%s> correctly doesn't exist"
+                % (comment, pan))
+        else:
+            msg = ("FAILED: %s; directory <%s> exists, when it shouldn't"
+                % (comment, pan))
+            raise AssertionError(msg)
+
     def assertFilesEqual(self, pan1, pan2, comment=""):
         """ Do two files contain the same data?
 
