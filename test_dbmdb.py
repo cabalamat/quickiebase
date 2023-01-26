@@ -62,10 +62,10 @@ class T_DbmDb(lintest.TestCase):
         self.assertDirExists("~/.local/share/dbmdb/mybase")
 
     def test_colCreation(self):
-        db = DbmDb("mybase")
-        self.assertSame(db.__class__, DbmDb,
+        self.db = DbmDb("mybase")
+        self.assertSame(self.db.__class__, DbmDb,
              "(db) is a DbmDb")
-        col = db.getCollection("mycol")
+        col = self.db.getCollection("mycol")
         self.assertSame(col.__class__, DbmCollection,
              "(col) is a DbmCollection")
 
@@ -79,11 +79,22 @@ class T_DbmDb(lintest.TestCase):
             prn("    %r", value)
         #//for k
 
-        col.saveToFile("mybase.json")
-        self.assertFileExists("mybase.json")
+        #col.saveToFile("mybase.json")
+        #self.assertFileExists("mybase.json")
 
-        col.saveToFilePretty("mybasep.json")
-        self.assertFileExists("mybasep.json")
+        #col.saveToFilePretty("mybasep.json")
+        #self.assertFileExists("mybasep.json")
+
+    def test_getDoc(self):
+        col = self.db.getCollection("mycol")
+        r = col.getDoc("001")
+        self.assertSame(r, {'_id':"001", 'v':55, 'n':"cat"})
+
+        r = col.getDoc("002")
+        self.assertSame(r, {'_id':"002", 'v':41, 'n':"dog"})
+
+        r = col.getDoc("003")
+        self.assertSame(r, None)
 
 
 

@@ -111,6 +111,20 @@ class DbmCollection(RamCollection):
         if self.inRam:
             self.documents.pop(id, None)
 
+    def getDoc(self, id: DocId) -> Optional[JsonDoc]:
+        """ returns the document with the id, or None if it
+        doesn't exist.
+        """
+        if self.inRam:
+            return super().getDoc(id)
+
+        d = self.ud.get(s2b(id), None)
+        if d is None or d==b"":
+            return None
+        jd = b2j(d)
+        jd["_id"] = id
+        return jd
+
     def insert_one(self, jDoc: JsonDoc):
         """ save a document, where the document has an id.
         It might be a new document or over-write an existing one
@@ -145,6 +159,7 @@ class DbmCollection(RamCollection):
             jd = b2j(self.ud[k])
             self.documents[k2] = jd
         #//for k
+        self.inRam = True
 
 #---------------------------------------------------------------------
 
