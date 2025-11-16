@@ -49,7 +49,7 @@ def getTypeInt(x) -> int:
     """ return an int for a type """
     if isinstance(x, type(None)): return 1
 
-    # must test for bool before int because a bool is an int
+    # must test for bool before int because in Python a bool is an int
     if isinstance(x, bool): return 6
 
     if isinstance(x, (int, float)): return 2

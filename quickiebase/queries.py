@@ -35,7 +35,7 @@ DictQuerySpec = Dict
 
 
 #---------------------------------------------------------------------
-# does a doument match a query?
+# does a document match a query?
 
 def matchesQuery(jDoc: JsonDoc, q: QuerySpec) -> bool:
     """ does a document match query (q)? """
@@ -83,7 +83,7 @@ def matchesOp(jDoc: JsonDoc, field: str, op: str, value) -> bool:
     at the $gt/$lte level, where:
     * field = "name"
     * op = "$gt"
-    * value = "BBB"
+    * value = "BBBB"
 
     operators include:
     $gt = greater than
