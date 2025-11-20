@@ -6,11 +6,9 @@ DbmDb and DbmCollection implement a database over dbm.
 """
 
 import shutil
-
-from quickiebase import butil
-
 import dbm
 
+from quickiebase import butil
 from quickiebase.butil import *
 from quickiebase import lintest
 

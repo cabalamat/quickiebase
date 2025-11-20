@@ -26,4 +26,12 @@ at which point the whole collection is read into RAM (once) to do the
 * Passed 69 assertions in 22 test functions
 * `wc *.py */*.py`: 2190 lines
 
+## 2025-Nov-18
+
+writing test suite that can be used by RamDb, DbmDb and other daybase classes.
+
+## 2025-Nov-20
+
+Created <test_suite.py>. Currently does not pass it. Saved to git.
+
 /end/
