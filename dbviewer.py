@@ -61,7 +61,10 @@ def colInfo(dbName: str, colName: str):
     db = dbm.open(colPath)
     for key in sorted(db.keys()):
         val = db[key]
-        print(f"{key}: {val}")
+        #print(f"{key}: {val}")
+        ks = key.decode(encoding="utf-8")
+        vs = val.decode(encoding="utf-8")
+        print(f"{ks}: {vs}")
     #//for
 
 #---------------------------------------------------------------------

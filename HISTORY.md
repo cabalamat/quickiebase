@@ -34,4 +34,8 @@ writing test suite that can be used by RamDb, DbmDb and other daybase classes.
 
 Created <test_suite.py>. Currently does not pass it. Saved to git.
 
+## 2026-Sep-23
+
+Created <dbviewer.py>, a quick and dirty viewer of dbm databases.
+
 /end/
