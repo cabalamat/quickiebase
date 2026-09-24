@@ -28,6 +28,11 @@ class GenDb(ABC):
         necessary
         """
 
+    @abstractmethod
+    def list_collection_names(self) -> List[str]:
+        """ return the names of this database's collections """
+
+
 
 #---------------------------------------------------------------------
 
@@ -35,6 +40,12 @@ class GenCollection(ABC):
     """ a generic collection/table """
 
     name: str  # name of collection
+
+    @abstractmethod
+    def drop(self):
+        """ delete this collection and all its contents.
+        This removes the collection from its database.
+        """
 
     @abstractmethod
     def count(self,
@@ -67,6 +78,11 @@ class GenCollection(ABC):
     def delete_many(self,
                     q: QuerySpec=None):
         """ delete all documents that match a specification """
+
+    #@abstractmethod
+    #def delete_all(self):
+    #    """ delete all documents """
+    #    self.delete_many()
 
     @abstractmethod
     def getDoc(self, id: DocId) -> Optional[JsonDoc]:

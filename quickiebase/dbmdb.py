@@ -14,6 +14,7 @@ from . import butil
 from .butil import form
 
 from .quickietypes import DocId, JsonDoc
+from .queries import QuerySpec
 
 from .gendb import GenDb, GenCollection
 from .ramdb import RamDb, RamCollection, removeId
@@ -53,6 +54,10 @@ class DbmDb(RamDb):
         """ create a new collection in this database """
         newCol = DbmCollection(self, colName)
         self.collections[colName] = newCol
+
+    def list_collection_names(self) -> List[str]:
+        """ return the names of this database's collections """
+        return list(self.collections.keys())
 
 
 #---------------------------------------------------------------------
@@ -94,6 +99,7 @@ class DbmCollection(RamCollection):
     pan: str # full pathname to my file
     documents: Dict[DocId, JsonDoc] = {}
     inRam: bool = False # documents currently in RAM?
+    ud = None # underlying dbm database
 
     def __init__(self, db: DbmDb, name: str):
         self.db = db
@@ -102,6 +108,34 @@ class DbmCollection(RamCollection):
         self.inRam = False
         self.pan = butil.join(db.dbDir, name)
         self.ud = dbm.open(self.pan, 'c')
+
+    def drop(self):
+        """ delete this collection and all its contents.
+        This removes the collection from its database.
+        """
+        # delete my data:
+        butil.deleteFile(self.pan)
+
+        # delete my record in the db:
+        del self.db.collections[self.name]
+
+        # delete my local data:
+        self.documents = {}
+
+    def count(self, q: QuerySpec=None) -> int:
+        """ returns the number of documents that matched the spec """
+        if self.inRam:
+            return super().count(q)
+
+        if q is None:
+            return len(self.ud)
+
+
+    def delete_all(self):
+        """ delete all documents """
+        keys: List[bytes] = list(self.ud.keys())
+        for k in keys:
+            del self.ud[k]
 
     def delete_one(self, id: DocId):
         """ delete a document based on its id """

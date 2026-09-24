@@ -5,7 +5,7 @@ from typing import List, Tuple, Union, Dict, Optional, Any, Iterator
 import json
 
 from . import butil
-from .butil import form, dpr
+from .butil import form, dpr, printargs
 
 from .quickietypes import DocId, JsonDoc
 
@@ -38,6 +38,10 @@ class RamDb(GenDb):
         """ create a new collection in this database """
         newCol = RamCollection(self, colName)
         self.collections[colName] = newCol
+
+    def list_collection_names(self) -> List[str]:
+        """ return the names of this database's collections """
+        return list(self.collections.keys())
 
     def makeIdStub(self) -> str:
         """ make a stub for an id """
@@ -101,10 +105,22 @@ class RamCollection(GenCollection):
         return r
 
 
+    def drop(self):
+        """ delete this collection and all its contents.
+        This removes the collection from its database.
+        """
+        # delete my record in the db:
+        del self.db.collections[self.name]
+
+        # delete my local data:
+        self.documents = {}
+
+    @printargs
     def count(self, q: QuerySpec=None) -> int:
         """ returns the number of documents that matched the spec
         For now, return count of all documents.
         """
+        print(f"{q=} {self.documents=}")
         if q is None:
             return len(self.documents)
         else:

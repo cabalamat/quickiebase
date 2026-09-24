@@ -1,4 +1,4 @@
-# About Quickiebase
+# About <i class="fas fa-shipping-fast"></i> Quickiebase
 
 Quickiebase (abbreviated **QB**) is (or rather, will be, once it's done) a pure-Python NoSQL database with a similar API to MongoDB.
 
@@ -18,7 +18,20 @@ I'm also mindful that MongoDB stopped being open source with its Server Side Pub
 
 Quickiebase will be [developed in stages](roadmap).
 
+## Icon for Quickiebase
+
+This Font Awesome icon: <i class="fas fa-shipping-fast"></i>
+
+Of possibly a [running man](https://thenounproject.com/icon/speed-7358642/) from Noun Project:
+
+![](speed.png)
+
 ## See also
 
-* [Program documentation](program_documentation) documents the internals of the QB program (as opposed to its external interface)
+* [[Roadmap]] of how Quickiebase will be developed
+* [Program documentation](program_documentation) documents the internals of the QB program (as opposed to its external interface), including
+    * [[dbmdb module]]
 * [[Similar projects]]
+* [[dbviewer]] is a command line tool for inspecting Quickiebase databases
+* documentation for [MongoDB's pymongo](https://www.mongodb.com/docs/languages/python/pymongo-driver/current/)
+* [Pymongo API documentation](https://pymongo.readthedocs.io/en/stable/api/index.html)
