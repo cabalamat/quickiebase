@@ -53,6 +53,10 @@ class GenCollection(ABC):
         """ returns the number of documents that matched the spec """
 
     @abstractmethod
+    def keys(self) -> List[DocId]:
+        """ return all the keys for this collection """
+
+    @abstractmethod
     def find(self,
              q: QuerySpec=None,
              skip: int=0,

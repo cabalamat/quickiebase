@@ -1,11 +1,11 @@
 # dbmdb module
 
-The `dbmdb.py` module implements these classes:
+The `dbmdb.py` module implements a database using Python's built-in dbm class. It defines these classes:
 
 * `DbmDb` = a database
 * `DbmCollection` = a collection in a database
 
-## DbmCollection
+## DbmCollection class
 
 Important instance variables are:
 

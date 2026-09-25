@@ -131,6 +131,10 @@ class RamCollection(GenCollection):
             #//for d
             return co
 
+    def keys(self) -> List[DocId]:
+        """ return all the keys for this collection """
+        return list(self.documents.keys())
+
     def find(self,
              q: QuerySpec=None,
              skip: int=0,
