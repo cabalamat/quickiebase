@@ -45,6 +45,14 @@ class T_creation(lintest.TestCase):
         self.assertSame(r, 3, "3 documents in mycol")
         prn("self.col=%s", self.col)
 
+    def test_keys(self):
+        """ the keys() function """
+        ks = self.col.keys()
+        self.assertTrue("001" in ks, "001 in ks")
+        self.assertTrue("002" in ks, "002 in ks")
+        self.assertTrue("003" in ks, "003 in ks")
+        self.assertSame(len(ks), 3, "3 elements in ks")
+
     def test_getDoc(self):
         """ get documents based on id """
         j = self.col.getDoc("001")

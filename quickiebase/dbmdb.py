@@ -130,6 +130,11 @@ class DbmCollection(RamCollection):
         if q is None:
             return len(self.ud)
 
+    def keys(self) -> List[DocId]:
+        """ return all the keys for this collection """
+        self._ensureInRam()
+        return list(self.documents.keys())
+
 
     def delete_all(self):
         """ delete all documents """

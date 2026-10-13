@@ -7,3 +7,6 @@ To run dbviewer:
     $ python dbviewer.py [OPTIONS]
 
 
+## Future plans
+
+There will also be a web-based viewer called [[webviewer]].

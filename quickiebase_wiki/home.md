@@ -32,6 +32,6 @@ Of possibly a [running man](https://thenounproject.com/icon/speed-7358642/) from
 * [Program documentation](program_documentation) documents the internals of the QB program (as opposed to its external interface), including
     * [[dbmdb module]]
 * [[Similar projects]]
-* [[dbviewer]] is a command line tool for inspecting Quickiebase databases
+* [[dbviewer]] is a command line tool for inspecting Quickiebase databases; [[webviewer]] is a web-based viewer
 * documentation for [MongoDB's pymongo](https://www.mongodb.com/docs/languages/python/pymongo-driver/current/)
 * [Pymongo API documentation](https://pymongo.readthedocs.io/en/stable/api/index.html)

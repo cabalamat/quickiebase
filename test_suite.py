@@ -45,8 +45,6 @@ class T_creation(lintest.TestCase):
         r = self.col.count()
         self.assertSame(r, 0, "newly created mycol is empty")
 
-
-
     def test_saveDoc(self):
         """ the saveDoc() function """
         j1 = {'_id':"001", "name": "foo", "species": "dog"}
@@ -64,6 +62,15 @@ class T_creation(lintest.TestCase):
         r = self.col.count()
         self.assertSame(r, 3, "3 documents in mycol")
         prn("self.col=%s", self.col)
+
+    def test_keys(self):
+        """ the keys() function """
+        ks = self.col.keys()
+        print(f"{ks=}")
+        self.assertTrue("001" in ks, "001 in ks")
+        self.assertTrue("002" in ks, "002 in ks")
+        self.assertTrue("003" in ks, "003 in ks")
+        self.assertSame(len(ks), 3, "3 elements in ks")
 
     def test_getDoc(self):
         """ get documents based on id """
