@@ -10,5 +10,6 @@
 #### ignore directories
 __pycache__/
 .mypy_cache/
+v3/
 
 #end
