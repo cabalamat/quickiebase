@@ -1,0 +1,61 @@
+{#
+main.html = the base template
+
+Uses Twitter Bootstrap
+
+#}<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{% block title %}page title{% endblock %}</title>
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/fontawesome-free-5.15.4-web/css/all.css">
+    <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/app.css">
+    <link rel="stylesheet" href="/static/pygments.css">
+
+    <link rel="shortcut icon" type="image/x-icon" href="/static/cw_icon_b.png" />
+    {% block extrahead %}{% endblock extrahead %}
+</head>
+
+<body>
+{%block body_start %}
+      <!-- Sidebar -->     
+        {%block topbar %}
+        <div class="cw-navbar">
+          <img style="max-width:32px" src="/static/cw_icon_b.png" alt="">
+          <b style="font-size:115%">Quickiebase</b>
+          <a href="/help/about"><i class='fa fa-info-circle'></i> About</a>
+          <a href="/help/home">
+            <i class="fa fa-question-circle" id="myelement"></i> Help
+          </a>
+        </div>    
+        {%endblock topbar %}
+{% endblock body_start %}
+
+{% block contents %}
+<div class="container-liquid" style="padding:0 20px">
+      {% block page_wrapper %}
+
+        <div class="row">
+          <div class="col-lg-12">{% block body %}
+          <p>This is the body of the page.</p>
+          {% endblock body %}</div>
+        </div><!-- row -->
+      {% endblock page_wrapper %}
+</div>
+{% endblock contents %}
+
+<script src="/static/jquery-3.1.1.min.js"></script>
+<script src="/static/jquery.selection.js"></script>
+<script src="/static/jsfunctions.js"></script>
+<script src="/static/app.js"></script>
+
+{%block atend%}
+<!-- just before /body tag -->
+{%endblock atend%}
+</body></html>

@@ -6,7 +6,7 @@ Quickiebase (abbreviated **QB**) is (or rather, will be, once it's done) a pure-
 
 Python is renowned for being batteries-included. It also has access to sqlite as part of the standard library. I think it would make sense to have an NoSQL document database as part of the standard library; something that can you can set up and start using with a simple `import` statement.
 
-(If not as part of the standsrd library, then it should be available as a package on the [Python Package Index](https://pypi.org/).)
+(If not as part of the standard library, then it should be available as a package on the [Python Package Index](https://pypi.org/).)
 
 According to the [2022 Stack Overflow developer survey](https://survey.stackoverflow.co/2022/#technology-most-popular-technologies), MongoDB is the most popular NoSQL database (and the 4th most popular database overall), and the  most wanted NoSQL database which 17% of developers wanting to use it.
 

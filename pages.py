@@ -8,8 +8,11 @@ from allpages import *
 #---------------------------------------------------------------------
 
 @app.route("/")
-def frontPage():
-    return "This is Webviewer!"
+def front_page():
+    tem = jinjaEnv.get_template("front_page.html")
+    h = tem.render(
+    )
+    return h
 
 #---------------------------------------------------------------------
 
